@@ -1,0 +1,25 @@
+"""
+First of all make sure the delta jar version is compatible with the spark
+Delta Lake JAR (io.delta:delta-core_2.12:3.3.0) is compatible with Hadoop 3.4.0, Spark 3.5.3
+emr-7.6.0
+"""
+"""
+Ensured all spark-submit options come before the Python script path.
+The Python script is passed without a --class option (only needed for JARs).
+"""
+
+""" spark-submit --deploy-mode cluster --packages io.delta:delta-spark_2.12:3.3.0 
+--conf spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension 
+--conf spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog 
+--conf spark.yarn.submit.waitAppCompletion=true s3://airflow-practice-bucket/files/spark-etl.py 
+--data_source s3://airflow-practice-bucket/data/raw --output_uri s3://airflow-practice-bucket/data/staging"""
+
+"""
+What _delta_log is:
+    The _delta_log folder is an essential part of Delta Lake.
+    It stores the transaction log files that track all operations performed on the Delta table
+    (e.g., writes, updates, and schema changes).
+    These logs enable Delta Lake to support ACID transactions, schema evolution, and time travel.
+Why _delta_log_$folder$ appears:
+    Similar to the $folder$ files, the _delta_log_$folder$ is a legacy placeholder file indicating that _delta_log/ is a directory.
+"""
